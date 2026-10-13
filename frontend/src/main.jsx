@@ -61,6 +61,7 @@ function App() {
   const [cropName, setCropName] = useState("Rice");
   const [cropVariety, setCropVariety] = useState("");
   const [growthStage, setGrowthStage] = useState("vegetative");
+  const [plantingDate, setPlantingDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const clearNotice = () => { setError(""); setMessage(""); };
@@ -143,8 +144,18 @@ function App() {
     if (!selectedFarm) { setError("Select a farm before adding a crop."); return; }
     setLoading(true); clearNotice();
     try {
-      await apiRequest(`/api/v1/farms/${selectedFarm}/crops`, token, { method: "POST", body: JSON.stringify({ crop: cropName, variety: cropVariety.trim() || null, growth_stage: growthStage }) });
-      setCropVariety(""); setShowCropForm(false); await loadCrops(selectedFarm); setMessage("Crop added successfully.");
+      await apiRequest(`/api/v1/farms/${selectedFarm}/crops`, token, { method: "POST", body: JSON.stringify({
+        crop: cropName,
+        variety: cropVariety.trim() || null,
+        growth_stage: growthStage,
+        planting_date: plantingDate,
+      }) });
+      setCropVariety("");
+      setGrowthStage("vegetative");
+      setPlantingDate(new Date().toISOString().slice(0, 10));
+      setShowCropForm(false);
+      await loadCrops(selectedFarm);
+      setMessage("Crop added successfully.");
     } catch (err) { setError(err.message); }
     finally { setLoading(false); }
   }
@@ -271,7 +282,7 @@ function App() {
       {page === "Crop Health" && <>
         <section className="page-intro-row"><div><span className="eyebrow green-eyebrow">CROP MANAGEMENT</span><h2>Crop health</h2><p>Select a farm, manage crop records, and request a risk assessment.</p></div><button className="button button-primary" onClick={() => setShowCropForm((open) => !open)} disabled={!selectedFarm}>{showCropForm ? "× Cancel" : "＋ Add crop"}</button></section>
         <section className="surface-card farm-select-bar"><label className="field-label">Viewing farm<select className="field-input" value={selectedFarm} onChange={(event) => setSelectedFarm(event.target.value)}><option value="">Select a farm</option>{farms.map((farm) => <option key={farm.id} value={farm.id}>{farm.name} — {farm.location}</option>)}</select></label><div className="farm-select-note"><span className="demo-dot" /> Crop records are loaded from the backend.</div></section>
-        {showCropForm && <section className="surface-card form-card"><div className="section-heading"><div><h3>Add a crop</h3><p>Save a crop record under the selected farm.</p></div><span className="heading-icon">♧</span></div><form onSubmit={createCrop} className="form-grid"><label className="field-label">Crop type<select className="field-input" value={cropName} onChange={(event) => setCropName(event.target.value)}>{cropOptions.map((crop) => <option key={crop} value={crop}>{crop}</option>)}</select></label><label className="field-label">Variety (optional)<input className="field-input" value={cropVariety} onChange={(event) => setCropVariety(event.target.value)} placeholder="e.g. Pusa Basmati 1509" /></label><label className="field-label">Growth stage<select className="field-input" value={growthStage} onChange={(event) => setGrowthStage(event.target.value)}>{stageOptions.map((stage) => <option key={stage} value={stage}>{stage[0].toUpperCase() + stage.slice(1)}</option>)}</select></label><div className="form-actions"><button className="button button-primary" disabled={loading || !selectedFarm}>{loading ? "Saving…" : "Save crop"}</button><button className="button button-ghost" type="button" onClick={() => setShowCropForm(false)}>Cancel</button></div></form></section>}
+        {showCropForm && <section className="surface-card form-card"><div className="section-heading"><div><h3>Add a crop</h3><p>Save a crop record under the selected farm.</p></div><span className="heading-icon">♧</span></div><form onSubmit={createCrop} className="form-grid"><label className="field-label">Crop type<select className="field-input" value={cropName} onChange={(event) => setCropName(event.target.value)}>{cropOptions.map((crop) => <option key={crop} value={crop}>{crop}</option>)}</select></label><label className="field-label">Variety (optional)<input className="field-input" value={cropVariety} onChange={(event) => setCropVariety(event.target.value)} placeholder="e.g. Pusa Basmati 1509" /></label><label className="field-label">Growth stage<select className="field-input" value={growthStage} onChange={(event) => setGrowthStage(event.target.value)}>{stageOptions.map((stage) => <option key={stage} value={stage}>{stage[0].toUpperCase() + stage.slice(1)}</option>)}</select></label><label className="field-label">Planting date<input className="field-input" type="date" value={plantingDate} onChange={(event) => setPlantingDate(event.target.value)} required /></label><div className="form-actions"><button className="button button-primary" disabled={loading || !selectedFarm}>{loading ? "Saving…" : "Save crop"}</button><button className="button button-ghost" type="button" onClick={() => setShowCropForm(false)}>Cancel</button></div></form></section>}
         {crops.length ? <div className="crop-card-grid health-grid">{crops.map((crop) => <article className="crop-health-card" key={crop.id}><div className="crop-health-top"><div className="crop-emblem large">🌾</div><span className="status-chip neutral">NOT ASSESSED</span></div><h3>{crop.crop}</h3><p>{crop.variety || "Variety not specified"}</p><div className="crop-stage-row"><span>Growth stage</span><b>{crop.growth_stage || "Not specified"}</b></div><div className="crop-stage-row"><span>Crop record ID</span><b>#{crop.id}</b></div><button className="button button-primary button-wide" onClick={() => analyzeCrop(String(crop.id))} disabled={loading}>{loading ? "Analyzing…" : "Analyze crop risk →"}</button><p className="card-demo-note">Demo model · placeholder inputs</p></article>)}</div> : <div className="surface-card empty-state"><div className="empty-icon">♧</div><h3>No crops in this farm</h3><p>Choose a farm with crop records or add a crop to this farm.</p><button className="button button-primary" onClick={() => setShowCropForm(true)} disabled={!selectedFarm}>＋ Add a crop</button></div>}
       </>}
 
