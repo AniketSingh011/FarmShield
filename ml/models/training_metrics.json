@@ -1,0 +1,32 @@
+{
+    "dataset_rows": 212019,
+    "training_rows": 169615,
+    "testing_rows": 42404,
+    "features": [
+        "Crop_Type",
+        "Temperature",
+        "Humidity",
+        "Rainfall",
+        "Soil_Moisture",
+        "Soil_pH",
+        "Crop_Growth_Stage"
+    ],
+    "target": "Crop_Health_Label",
+    "model": "Random Forest",
+    "n_estimators": 200,
+    "accuracy": 0.652226205074993,
+    "precision": 0.6987270155586988,
+    "recall": 0.8833333333333333,
+    "f1_score": 0.7802595699661754,
+    "roc_auc": 0.49798677042085726,
+    "confusion_matrix": [
+        [
+            1475,
+            11289
+        ],
+        [
+            3458,
+            26182
+        ]
+    ]
+}

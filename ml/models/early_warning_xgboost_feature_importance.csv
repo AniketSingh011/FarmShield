@@ -1,0 +1,10 @@
+feature,importance
+soil_moisture,0.35533202
+temperature,0.17065026
+ndvi,0.13854323
+humidity,0.10025304
+wind_speed,0.05312483
+soil_ph,0.04949285
+rainfall,0.048153378
+crop_age,0.043774664
+growth_stage,0.040675752

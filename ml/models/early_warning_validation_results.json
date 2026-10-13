@@ -1,0 +1,62 @@
+{
+    "dataset": "FarmShield Synthetic Early-Warning Development Dataset",
+    "samples": 5000,
+    "features": [
+        "temperature",
+        "humidity",
+        "rainfall",
+        "soil_moisture",
+        "soil_ph",
+        "wind_speed",
+        "ndvi",
+        "crop_age",
+        "growth_stage"
+    ],
+    "target": "crop_stress_label",
+    "label_definition": {
+        "0": "LOW / normal development condition",
+        "1": "ELEVATED_STRESS"
+    },
+    "data_status": "SYNTHETIC_DEVELOPMENT_ONLY",
+    "warning": "Metrics must not be represented as real-world FarmShield accuracy. Labels are generated from a transparent simulation until real labeled farm observations are available.",
+    "random_forest": {
+        "model": "RANDOM FOREST",
+        "accuracy": 0.867,
+        "precision": 0.8438177874186551,
+        "recall": 0.8644444444444445,
+        "f1": 0.854006586169045,
+        "roc_auc": 0.948820202020202,
+        "confusion_matrix": [
+            [
+                478,
+                72
+            ],
+            [
+                61,
+                389
+            ]
+        ],
+        "cv_f1_mean": 0.8525533659744736,
+        "cv_f1_std": 0.011871762667804459
+    },
+    "xgboost": {
+        "model": "XGBOOST",
+        "accuracy": 0.861,
+        "precision": 0.849438202247191,
+        "recall": 0.84,
+        "f1": 0.8446927374301676,
+        "roc_auc": 0.9410949494949495,
+        "confusion_matrix": [
+            [
+                483,
+                67
+            ],
+            [
+                72,
+                378
+            ]
+        ],
+        "cv_f1_mean": 0.8443255929830681,
+        "cv_f1_std": 0.007684459168944042
+    }
+}

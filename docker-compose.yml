@@ -1,0 +1,23 @@
+services:
+
+  postgres:
+    image: postgres:16
+
+    container_name: farmshield-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: farmshield
+      POSTGRES_USER: farmshield
+      POSTGRES_PASSWORD: farmshield
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - farmshield_postgres_data:/var/lib/postgresql/data
+
+
+volumes:
+  farmshield_postgres_data:

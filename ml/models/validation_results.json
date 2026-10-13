@@ -1,0 +1,72 @@
+{
+    "dataset": "UCI Soybean Large",
+    "samples": 290,
+    "classes": 15,
+    "cross_validation": "5-fold stratified",
+    "metrics": {
+        "accuracy": {
+            "mean": 0.9275862068965518,
+            "std": 0.01442517287127714
+        },
+        "precision_macro": {
+            "mean": 0.9568662818662819,
+            "std": 0.009932528908662306
+        },
+        "recall_macro": {
+            "mean": 0.9433333333333334,
+            "std": 0.021570298509241304
+        },
+        "f1_macro": {
+            "mean": 0.9444097838865642,
+            "std": 0.019814566705593954
+        },
+        "top2_accuracy": {
+            "mean": 0.9896551724137931,
+            "std": 0.015421158465515778
+        }
+    },
+    "fold_results": [
+        {
+            "fold": 1,
+            "accuracy": 0.9137931034482759,
+            "precision_macro": 0.9521885521885521,
+            "recall_macro": 0.9083333333333333,
+            "f1_macro": 0.9123897224206823,
+            "top2_accuracy": 0.9655172413793104
+        },
+        {
+            "fold": 2,
+            "accuracy": 0.9137931034482759,
+            "precision_macro": 0.9462962962962963,
+            "recall_macro": 0.95,
+            "f1_macro": 0.9442670401493932,
+            "top2_accuracy": 0.9827586206896551
+        },
+        {
+            "fold": 3,
+            "accuracy": 0.9310344827586207,
+            "precision_macro": 0.9666666666666667,
+            "recall_macro": 0.9666666666666667,
+            "f1_macro": 0.9666666666666667,
+            "top2_accuracy": 1.0
+        },
+        {
+            "fold": 4,
+            "accuracy": 0.9310344827586207,
+            "precision_macro": 0.9682539682539683,
+            "recall_macro": 0.9416666666666667,
+            "f1_macro": 0.9487581699346406,
+            "top2_accuracy": 1.0
+        },
+        {
+            "fold": 5,
+            "accuracy": 0.9482758620689655,
+            "precision_macro": 0.950925925925926,
+            "recall_macro": 0.95,
+            "f1_macro": 0.9499673202614379,
+            "top2_accuracy": 1.0
+        }
+    ],
+    "development_only": true,
+    "note": "This validation evaluates the UCI Soybean disease classification experiment. It is not FarmShield real-world early-warning accuracy."
+}
